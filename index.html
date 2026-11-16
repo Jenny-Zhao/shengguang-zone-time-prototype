@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>设置页 · 声光警示区生效时段 - 原型</title>
+<style>
+:root{
+  --c-bg:#D9DCE2; --c-card:#FFFFFF; --c-green:#12B76A; --c-line:#C9CDD3;
+  --c-primary-soft:#E4EEFF; --c-primary:#1B62FF; --c-red:#F04438;
+  --c-text-1:#1B1F27; --c-text-2:#7A8089; --c-text-3:#9AA1AB; --c-toggle-off:#A7A9AE;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:"PingFang SC","Microsoft YaHei",sans-serif}
+body{background:#15181D;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.device{width:1180px;height:760px;background:var(--c-bg);border-radius:28px;overflow:hidden;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.5);display:flex;flex-direction:column}
+/* 顶部 */
+.topbar{height:64px;background:var(--c-card);display:flex;align-items:center;padding:0 24px;gap:14px;border-bottom:1px solid #EDEFF2;flex-shrink:0}
+.topbar .back{width:40px;height:40px;border-radius:50%;background:#F2F3F6;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--c-text-1);font-size:20px}
+.topbar h1{font-size:19px;color:var(--c-text-1);font-weight:600}
+.topbar .badge{margin-left:auto;font-size:12px;color:var(--c-primary);background:var(--c-primary-soft);padding:4px 10px;border-radius:999px}
+/* 主体 */
+.body{flex:1;display:flex;min-height:0}
+.side{width:250px;background:var(--c-card);border-right:1px solid #EDEFF2;padding:16px 14px;display:flex;flex-direction:column;gap:10px;flex-shrink:0}
+.side .item{height:56px;border-radius:12px;display:flex;align-items:center;gap:12px;padding:0 18px;font-size:16px;color:var(--c-text-1);cursor:pointer;transition:.15s}
+.side .item svg{width:20px;height:20px;flex-shrink:0}
+.side .item.active{background:var(--c-primary);color:#fff}
+.side .item:not(.active):hover{background:#F5F6F8}
+.main{flex:1;overflow-y:auto;padding:20px 26px 40px}
+.main::-webkit-scrollbar{width:6px}
+.main::-webkit-scrollbar-thumb{background:var(--c-line);border-radius:3px}
+/* 分组与卡片 */
+.group-label{font-size:14px;color:var(--c-text-2);margin:14px 2px 10px}
+.card{background:var(--c-card);border-radius:12px;padding:18px 20px;margin-bottom:14px}
+.card .row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.card h3{font-size:16px;color:var(--c-text-1);font-weight:600}
+.card .desc{font-size:13px;color:var(--c-text-2);margin-top:6px;line-height:1.5}
+.num-box{display:flex;align-items:center;gap:10px}
+.num-box input{width:76px;height:40px;border:1px solid var(--c-line);border-radius:8px;text-align:center;font-size:16px;color:var(--c-text-1)}
+.num-box .reset{width:32px;height:32px;border-radius:50%;background:#F2F3F6;display:flex;align-items:center;justify-content:center;color:var(--c-text-2);cursor:pointer;font-size:14px}
+/* 开关 */
+.toggle{width:52px;height:30px;border-radius:999px;background:var(--c-toggle-off);position:relative;cursor:pointer;transition:.2s;flex-shrink:0}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on{background:var(--c-primary)}
+.toggle.on::after{left:25px}
+/* 新增入口卡片 */
+.entry{cursor:pointer;border:1.5px solid var(--c-primary);position:relative}
+.entry .tag-new{position:absolute;top:-10px;right:16px;background:var(--c-primary);color:#fff;font-size:12px;padding:3px 10px;border-radius:999px}
+.entry .chev{color:var(--c-text-3);font-size:18px}
+.entry .summary{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:12px;padding:4px 10px;border-radius:999px;background:#F2F3F6;color:var(--c-text-2)}
+.pill.ok{background:#E8F8F0;color:var(--c-green)}
+.pill.warn{background:#FEF0EF;color:var(--c-red)}
+/* 视图切换 */
+.view{display:none}
+.view.show{display:block}
+/* 警示区列表 */
+.zone-card{display:flex;align-items:center;gap:16px;cursor:pointer}
+.zone-card:hover{box-shadow:0 2px 10px rgba(27,98,255,.08)}
+.zone-ico{width:46px;height:46px;border-radius:12px;background:var(--c-primary-soft);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.zone-mid{flex:1;min-width:0}
+.zone-name{font-size:16px;font-weight:600;color:var(--c-text-1);display:flex;align-items:center;gap:10px}
+.st{font-size:12px;padding:3px 9px;border-radius:999px}
+.st.live{background:#E8F8F0;color:var(--c-green)}
+.st.off{background:#F2F3F6;color:var(--c-text-2)}
+.st.part{background:#FFF7E6;color:#D97706}
+.zone-seg{font-size:13px;color:var(--c-text-2);margin-top:5px}
+.zone-chev{color:var(--c-text-3)}
+/* 编辑页 */
+.crumb{font-size:13px;color:var(--c-text-2);margin-bottom:12px;cursor:pointer}
+.crumb b{color:var(--c-primary)}
+.seg-card{border:1px solid #EDEFF2;border-radius:12px;padding:16px;margin-bottom:12px;position:relative}
+.seg-card .del{position:absolute;top:12px;right:14px;color:var(--c-text-3);cursor:pointer;font-size:15px}
+.seg-card .del:hover{color:var(--c-red)}
+.wd-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.wd{min-width:44px;height:36px;border-radius:8px;border:1px solid var(--c-line);background:#fff;color:var(--c-text-2);font-size:14px;cursor:pointer;text-align:center;line-height:34px;padding:0 6px;user-select:none}
+.wd.on{background:var(--c-primary);border-color:var(--c-primary);color:#fff}
+.time-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.time-row input[type=time]{height:40px;border:1px solid var(--c-line);border-radius:8px;padding:0 10px;font-size:15px;color:var(--c-text-1)}
+.time-row .arr{color:var(--c-text-3)}
+.cross-tip{font-size:12px;color:#D97706;background:#FFF7E6;border-radius:6px;padding:4px 10px;display:none}
+.cross-tip.show{display:inline-block}
+.add-seg{width:100%;height:48px;border:1.5px dashed var(--c-line);border-radius:12px;background:none;color:var(--c-text-2);font-size:14px;cursor:pointer}
+.add-seg:hover:not(:disabled){border-color:var(--c-primary);color:var(--c-primary)}
+.add-seg:disabled{opacity:.45;cursor:not-allowed}
+.hint{font-size:12px;color:var(--c-text-3);margin-top:10px;line-height:1.6}
+/* 全天模式 */
+.all-day-card{display:flex;align-items:center;justify-content:space-between}
+/* Toast */
+.toast{position:absolute;left:50%;bottom:36px;transform:translateX(-50%) translateY(20px);background:rgba(27,31,39,.9);color:#fff;font-size:14px;padding:10px 22px;border-radius:999px;opacity:0;transition:.25s;pointer-events:none;z-index:9}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* 原型标注 */
+.note{position:absolute;right:-318px;top:120px;width:300px;background:#1E2229;border-radius:14px;padding:16px;color:#C8CDD6;font-size:12.5px;line-height:1.7}
+.note h4{color:#fff;font-size:13.5px;margin-bottom:8px}
+.note b{color:#7FA6FF}
+@media (max-width:1560px){.note{display:none}}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="topbar">
+    <div class="back" onclick="go('v-settings')">‹</div>
+    <h1 id="tb-title">语音灯光和动画</h1>
+    <span class="badge">原型 V1 · 仅演示</span>
+  </div>
+  <div class="body">
+    <!-- 左侧菜单 -->
+    <div class="side">
+      <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>灯光设置</div>
+      <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 12h4M7 15h7"/></svg>保养提醒</div>
+      <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1"/></svg>网络</div>
+      <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 17l6-10M4 17h16" stroke-linecap="round"/><path d="M14 7h6"/></svg>速度</div>
+      <div class="item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10v4a1 1 0 0 0 1 1h3l5 4V5L7 9H4a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>语音灯光和动画</div>
+      <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>地图</div>
+      <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18-3-3.5-3-14.5 0-18z"/></svg>语言和单位</div>
+    </div>
+
+    <div class="main">
+      <!-- ============ 视图1：设置页（截图原有内容 + 新增入口） ============ -->
+      <div class="view show" id="v-settings">
+        <div class="card">
+          <div class="row"><h3>音量</h3></div>
+          <div style="display:flex;align-items:center;gap:14px;margin-top:14px">
+            <span style="color:var(--c-text-2)">🎤</span>
+            <div style="flex:1;height:6px;border-radius:3px;background:#E4E6EB;position:relative">
+              <div style="width:12%;height:6px;border-radius:3px;background:var(--c-primary)"></div>
+              <div style="position:absolute;left:12%;top:-7px;width:20px;height:20px;border-radius:50%;background:#fff;border:4px solid var(--c-primary)"></div>
+            </div>
+          </div>
+        </div>
+        <div class="group-label">语音 / 音乐</div>
+        <div class="card">
+          <div class="row">
+            <div><h3>声音播放间隔(s)</h3></div>
+            <div class="num-box"><input value="10"><div class="reset">⟳</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="row">
+            <div><h3>清洁时播报语音</h3><div class="desc">机器人自动清洁时，可播报自定义语音</div></div>
+            <div class="toggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="row">
+            <div><h3>清洁时播报音乐</h3><div class="desc">机器人自动清洁时，可播报音乐</div></div>
+            <div class="toggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div style="text-align:center;color:var(--c-text-3);font-size:13px;padding:16px 0 4px;border-top:1px solid #F2F3F6;margin-top:14px">暂无音乐，请先导入音乐</div>
+        </div>
+
+        <!-- ★ 新增：声光警示区生效时段入口 -->
+        <div class="group-label">声光警示区</div>
+        <div class="card entry" onclick="go('v-zones')">
+          <span class="tag-new">新增</span>
+          <div class="row">
+            <div style="flex:1">
+              <h3>声光警示区生效时段</h3>
+              <div class="desc">配置地图内声光警示区的播报生效时段，按周重复；时段外进入区域不播报。与建图工具内配置互通，此处修改即时下发。</div>
+            </div>
+            <span class="chev">›</span>
+          </div>
+          <div class="summary" id="entry-summary"></div>
+        </div>
+      </div>
+
+      <!-- ============ 视图2：警示区列表 ============ -->
+      <div class="view" id="v-zones">
+        <div class="crumb" onclick="go('v-settings')">语音灯光和动画 <span>›</span> <b>声光警示区生效时段</b></div>
+        <div class="hint" style="margin:0 0 12px">共 <b id="zone-count">3</b> 个声光警示区 · 列表按地图 latest 同步 · 未设置时段的默认全天生效</div>
+        <div id="zone-list"></div>
+      </div>
+
+      <!-- ============ 视图3：单区时段编辑 ============ -->
+      <div class="view" id="v-edit">
+        <div class="crumb" onclick="go('v-zones')">声光警示区 <span>›</span> <b id="edit-title">编辑时段</b></div>
+        <div class="card all-day-card">
+          <div><h3>全天生效</h3><div class="desc">开启后全天全周生效，不校验下方时段</div></div>
+          <div class="toggle" id="tg-allday" onclick="toggleAllday()"></div>
+        </div>
+        <div id="seg-area"></div>
+        <button class="add-seg" id="btn-add" onclick="addSeg()">＋ 新增时段（每区最多 3 段）</button>
+        <div class="hint">· 时段按周重复生效，支持跨天（结束时间小于开始时间时自动按次日计算）<br>· 多段时段之间允许重叠，机器人按「任一时段命中即生效」判定<br>· 修改即时保存并下发机器人，无需手动点击保存</div>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast">已保存并下发</div>
+
+  <div class="note">
+    <h4>原型说明（对照 PRD V3）</h4>
+    <b>入口</b>：设置页 › 语音灯光和动画，新增「声光警示区生效时段」卡片。<br><br>
+    <b>能力</b>：按区配置生效时段（按周重复、最多 3 段、支持跨天），与建图 2.0 / PC 建图工具同一份配置，三端互通。<br><br>
+    <b>规则</b>：时段外进入区域不播报（含蜂鸣与灯效）；「全天生效」开关等价于未设置时段。<br><br>
+    <b>PRD 影响</b>：属性表「生效时段」三端支持列由「新版 / PC」扩为「新版 / PC / 本体设置页」，需回写 PRD。
+  </div>
+</div>
+
+<script>
+const WD=['一','二','三','四','五','六','日'];
+let zones=[
+  {id:1,name:'收银台警示区',allday:false,segs:[{days:[1,2,3,4,5],s:'08:00',e:'20:00'}]},
+  {id:2,name:'入口湿滑警示区',allday:true,segs:[]},
+  {id:3,name:'广告播报区（ET1）',allday:false,segs:[{days:[6,0],s:'10:00',e:'20:00'},{days:[1,2,3,4,5],s:'22:00',e:'06:00'}]},
+];
+let cur=0;
+const $=s=>document.querySelector(s);
+function go(v){['v-settings','v-zones','v-edit'].forEach(x=>$('#'+x).classList.remove('show'));$('#'+v).classList.add('show');
+  $('#tb-title').textContent=v==='v-settings'?'语音灯光和动画':'声光警示区生效时段';
+  if(v==='v-zones')renderList();if(v==='v-edit')renderEdit();}
+function toast(){const t=$('#toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1400)}
+function stOf(z){if(z.allday)return'<span class="st live">全天生效</span>';
+  const hit=z.segs.some(s=>s.days.length===0||true);
+  return z.segs.length?`<span class="st part">按时段 · ${z.segs.length} 段</span>`:'<span class="st off">未设置</span>'}
+function segText(z){if(z.allday)return'周一至周日 全天';
+  if(!z.segs.length)return'默认全天生效';
+  return z.segs.map(s=>{const d=s.days.length===7?'每天':s.days.map(i=>'周'+WD[i]).join('/');
+    const cross=s.e<=s.s;return `${d} ${s.s}–${s.e}${cross?'（次日）':''}`}).join('；')}
+function renderSummary(){
+  $('#entry-summary').innerHTML=zones.map(z=>{
+    const cls=z.allday?'ok':(z.segs.length?'':'warn');
+    const txt=z.allday?'全天生效':(z.segs.length?`${z.segs.length} 个时段`:'未设置时段');
+    return `<span class="pill ${cls}">${z.name} · ${txt}</span>`}).join('')}
+function renderList(){
+  $('#zone-count').textContent=zones.length;
+  $('#zone-list').innerHTML=zones.map((z,i)=>`
+   <div class="card zone-card" onclick="openEdit(${i})">
+     <div class="zone-ico">🔊</div>
+     <div class="zone-mid">
+       <div class="zone-name">${z.name} ${stOf(z)}</div>
+       <div class="zone-seg">${segText(z)}</div>
+     </div>
+     <span class="zone-chev">›</span>
+   </div>`).join('');
+  renderSummary()}
+function openEdit(i){cur=i;go('v-edit')}
+function toggleAllday(){zones[cur].allday=!zones[cur].allday;renderEdit();toast()}
+function renderEdit(){
+  const z=zones[cur];
+  $('#edit-title').textContent=z.name+' · 生效时段';
+  $('#tg-allday').classList.toggle('on',z.allday);
+  $('#btn-add').disabled=z.allday||z.segs.length>=3;
+  $('#seg-area').innerHTML=z.allday?'':z.segs.map((s,si)=>`
+   <div class="seg-card">
+     <span class="del" onclick="delSeg(${si})">🗑 删除</span>
+     <div class="wd-row">${WD.map((w,di)=>`<div class="wd ${s.days.includes(di)?'on':''}" onclick="tgDay(${si},${di})">周${w}</div>`).join('')}</div>
+     <div class="time-row">
+       <input type="time" value="${s.s}" onchange="setT(${si},'s',this.value)">
+       <span class="arr">→</span>
+       <input type="time" value="${s.e}" onchange="setT(${si},'e',this.value)">
+       <span class="cross-tip ${s.e<=s.s?'show':''}">跨天：至次日 ${s.e}</span>
+     </div>
+   </div>`).join('')||'<div class="hint" style="color:var(--c-red)">未设置时段且未开启全天，该区域将不生效</div>'}
+function tgDay(si,di){const s=zones[cur].segs[si];const i=s.days.indexOf(di);
+  i>=0?s.days.splice(i,1):s.days.push(di);renderEdit();toast()}
+function setT(si,k,v){zones[cur].segs[si][k]=v;renderEdit();toast()}
+function delSeg(si){zones[cur].segs.splice(si,1);renderEdit();toast()}
+function addSeg(){const z=zones[cur];if(z.segs.length>=3)return;
+  z.segs.push({days:[1,2,3,4,5],s:'09:00',e:'18:00'});renderEdit();toast()}
+renderSummary();
+</script>
+</body>
+</html>
