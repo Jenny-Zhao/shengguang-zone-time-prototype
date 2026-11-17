@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>设置页 · 声光警示区生效时段 - 原型</title>
+<title>声光警示区 · 建图2.0属性弹窗 + 设置页原型</title>
 <style>
 :root{
   --c-bg:#D9DCE2; --c-card:#FFFFFF; --c-green:#12B76A; --c-line:#C9CDD3;
@@ -14,10 +14,14 @@
 body{background:#15181D;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
 .device{width:1180px;height:760px;background:var(--c-bg);border-radius:28px;overflow:hidden;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.5);display:flex;flex-direction:column}
 /* 顶部 */
-.topbar{height:64px;background:var(--c-card);display:flex;align-items:center;padding:0 24px;gap:14px;border-bottom:1px solid #EDEFF2;flex-shrink:0}
+.topbar{height:64px;background:var(--c-card);display:flex;align-items:center;padding:0 20px;gap:12px;border-bottom:1px solid #EDEFF2;flex-shrink:0}
 .topbar .back{width:40px;height:40px;border-radius:50%;background:#F2F3F6;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--c-text-1);font-size:20px}
-.topbar h1{font-size:19px;color:var(--c-text-1);font-weight:600}
-.topbar .badge{margin-left:auto;font-size:12px;color:var(--c-primary);background:var(--c-primary-soft);padding:4px 10px;border-radius:999px}
+.topbar h1{font-size:18px;color:var(--c-text-1);font-weight:600;white-space:nowrap}
+.topbar .badge{font-size:12px;color:var(--c-primary);background:var(--c-primary-soft);padding:4px 10px;border-radius:999px}
+.topbar .spacer{flex:1}
+.tabbtn{height:40px;padding:0 16px;border-radius:10px;border:none;background:none;font-size:14px;color:var(--c-text-2);cursor:pointer}
+.tabbtn.on{background:var(--c-primary);color:#fff;font-weight:600}
+.tabbtn:not(.on):hover{background:#F2F3F6}
 /* 主体 */
 .body{flex:1;display:flex;min-height:0}
 .side{width:250px;background:var(--c-card);border-right:1px solid #EDEFF2;padding:16px 14px;display:flex;flex-direction:column;gap:10px;flex-shrink:0}
@@ -42,7 +46,7 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
 .toggle::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .toggle.on{background:var(--c-primary)}
 .toggle.on::after{left:25px}
-/* 新增入口卡片 */
+/* 入口卡片 */
 .entry{cursor:pointer;border:1.5px solid var(--c-primary);position:relative}
 .entry .tag-new{position:absolute;top:-10px;right:16px;background:var(--c-primary);color:#fff;font-size:12px;padding:3px 10px;border-radius:999px}
 .entry .chev{color:var(--c-text-3);font-size:18px}
@@ -58,30 +62,14 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
 .zone-card:hover{box-shadow:0 2px 10px rgba(27,98,255,.08)}
 .zone-ico{width:46px;height:46px;border-radius:12px;background:var(--c-primary-soft);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
 .zone-mid{flex:1;min-width:0}
-.zone-name{font-size:16px;font-weight:600;color:var(--c-text-1);display:flex;align-items:center;gap:10px}
+.zone-name{font-size:16px;font-weight:600;color:var(--c-text-1);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .st{font-size:12px;padding:3px 9px;border-radius:999px}
 .st.live{background:#E8F8F0;color:var(--c-green)}
-.st.off{background:#F2F3F6;color:var(--c-text-2)}
-.st.part{background:#FFF7E6;color:#D97706}
 .zone-seg{font-size:13px;color:var(--c-text-2);margin-top:5px}
 .zone-chev{color:var(--c-text-3)}
-/* 编辑页 */
+/* 编辑页（音频） */
 .crumb{font-size:13px;color:var(--c-text-2);margin-bottom:12px;cursor:pointer}
 .crumb b{color:var(--c-primary)}
-.seg-card{border:1px solid #EDEFF2;border-radius:12px;padding:16px;margin-bottom:12px;position:relative}
-.seg-card .del{position:absolute;top:12px;right:14px;color:var(--c-text-3);cursor:pointer;font-size:15px}
-.seg-card .del:hover{color:var(--c-red)}
-.wd-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.wd{min-width:44px;height:36px;border-radius:8px;border:1px solid var(--c-line);background:#fff;color:var(--c-text-2);font-size:14px;cursor:pointer;text-align:center;line-height:34px;padding:0 6px;user-select:none}
-.wd.on{background:var(--c-primary);border-color:var(--c-primary);color:#fff}
-.time-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.time-row input[type=time]{height:40px;border:1px solid var(--c-line);border-radius:8px;padding:0 10px;font-size:15px;color:var(--c-text-1)}
-.time-row .arr{color:var(--c-text-3)}
-.cross-tip{font-size:12px;color:#D97706;background:#FFF7E6;border-radius:6px;padding:4px 10px;display:none}
-.cross-tip.show{display:inline-block}
-.add-seg{width:100%;height:48px;border:1.5px dashed var(--c-line);border-radius:12px;background:none;color:var(--c-text-2);font-size:14px;cursor:pointer}
-.add-seg:hover:not(:disabled){border-color:var(--c-primary);color:var(--c-primary)}
-.add-seg:disabled{opacity:.45;cursor:not-allowed}
 .hint{font-size:12px;color:var(--c-text-3);margin-top:10px;line-height:1.6}
 /* 示警音频 */
 .audio-mode{display:flex;gap:10px;margin-top:12px}
@@ -109,10 +97,61 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
 .qr-hint{font-size:12px;color:var(--c-text-2);background:#F7F8FA;border-radius:8px;padding:10px;margin-top:12px;line-height:1.7;text-align:left}
 .qr-box .btns{display:flex;gap:10px;margin-top:16px}
 .qr-box .btns .btn-mini{flex:1;height:40px}
-/* 全天模式 */
-.all-day-card{display:flex;align-items:center;justify-content:space-between}
+.qr-zones{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.qr-zones .pill{cursor:pointer;border:1px solid transparent}
+.qr-zones .pill.on{background:var(--c-primary-soft);color:var(--c-primary);border-color:var(--c-primary);font-weight:600}
+/* ====== 建图2.0 视图 ====== */
+.mapwrap{position:relative;height:100%;background:#E9EBEF;overflow:hidden}
+.mapgrid{position:absolute;inset:0;background-image:linear-gradient(#DDE0E6 1px,transparent 1px),linear-gradient(90deg,#DDE0E6 1px,transparent 1px);background-size:40px 40px}
+.map-shape{position:absolute;border:2px dashed var(--c-red);background:rgba(240,68,56,.08);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--c-red)}
+.map-shape.zone{border:2px solid var(--c-primary);background:rgba(27,98,255,.10);color:var(--c-primary);cursor:pointer}
+.map-shape.zone.cur{border-width:3px;background:rgba(27,98,255,.18);font-weight:600}
+.robot{position:absolute;width:26px;height:26px;border-radius:50%;background:#1B1F27;color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+/* 属性弹窗 */
+.dlg{position:absolute;right:26px;top:22px;width:400px;max-height:660px;overflow-y:auto;background:#fff;border-radius:16px;padding:20px;box-shadow:0 12px 40px rgba(0,0,0,.22)}
+.dlg::-webkit-scrollbar{width:6px}
+.dlg::-webkit-scrollbar-thumb{background:var(--c-line);border-radius:3px}
+.dlg-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.dlg-head h2{font-size:18px;color:var(--c-text-1)}
+.chk-demo{font-size:12px;padding:4px 10px;border-radius:999px}
+.chk-demo.ok{background:#E8F8F0;color:var(--c-green)}
+.chk-demo.bad{background:#FEF0EF;color:var(--c-red)}
+.dlg label,.flabel{display:block;font-size:14px;font-weight:600;color:var(--c-text-1);margin:14px 0 8px}
+.dlg input[type=text]{width:100%;height:44px;border:1px solid var(--c-line);border-radius:8px;background:#F5F6F8;padding:0 12px;font-size:15px;color:var(--c-text-1)}
+.mode-row{display:flex;gap:10px}
+.mode-btn{flex:1;height:62px;border:1.5px solid #EDEFF2;border-radius:10px;background:#F5F6F8;color:var(--c-text-2);font-size:15px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.mode-btn .mi{font-size:18px}
+.mode-btn.on{border-color:var(--c-primary);background:var(--c-primary-soft);color:var(--c-primary);font-weight:600}
+.ct-row{display:flex;align-items:center;gap:10px;border:1px solid #EDEFF2;border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;font-size:15px;color:var(--c-text-1)}
+.ct-row:hover{border-color:var(--c-primary)}
+.ct-row .cb{width:20px;height:20px;border:1.5px solid var(--c-line);border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px}
+.ct-row.on .cb{background:var(--c-primary);border-color:var(--c-primary)}
+.ct-row.on{border-color:var(--c-primary);background:#FAFBFF}
+.ct-hint{font-size:12px;color:var(--c-text-3);margin-top:2px}
+.sub-card{border:1px solid #EDEFF2;border-radius:10px;padding:12px;margin-bottom:10px}
+.sub-card .del{float:right;color:var(--c-text-3);cursor:pointer;font-size:12px}
+.sub-card .del:hover{color:var(--c-red)}
+.wd-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.wd{min-width:36px;height:32px;border-radius:7px;border:1px solid var(--c-line);background:#fff;color:var(--c-text-2);font-size:12px;cursor:pointer;text-align:center;line-height:30px;padding:0 4px;user-select:none}
+.wd.on{background:var(--c-primary);border-color:var(--c-primary);color:#fff}
+.time-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.time-row input[type=time]{height:36px;border:1px solid var(--c-line);border-radius:7px;padding:0 8px;font-size:13px;color:var(--c-text-1)}
+.cross-tip{font-size:11px;color:#D97706;background:#FFF7E6;border-radius:6px;padding:3px 8px}
+.add-seg2{width:100%;height:40px;border:1.5px dashed var(--c-line);border-radius:10px;background:none;color:var(--c-text-2);font-size:13px;cursor:pointer}
+.add-seg2:disabled{opacity:.45;cursor:not-allowed}
+.allday-row{display:flex;align-items:center;justify-content:space-between}
+.audio-src-row{display:flex;align-items:center;gap:10px;border:1px solid #EDEFF2;border-radius:8px;padding:11px 14px;margin-bottom:8px;cursor:pointer;font-size:14px;color:var(--c-text-1)}
+.audio-src-row .rd{width:18px;height:18px;border:1.5px solid var(--c-line);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.audio-src-row.on{border-color:var(--c-primary);background:#FAFBFF}
+.audio-src-row.on .rd{border-color:var(--c-primary)}
+.audio-src-row.on .rd::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--c-primary)}
+.audio-src-row .dur{margin-left:auto;font-size:12px;color:var(--c-text-3)}
+.dlg-foot{display:flex;justify-content:flex-end;gap:12px;margin-top:18px}
+.dlg-foot .btn-mini{height:44px;padding:0 26px;font-size:15px;border-radius:10px}
+.dlg-foot .btn-mini.cancel{background:#F2F3F6}
+.dlg-foot .btn-mini.confirm{background:var(--c-primary);color:#fff;padding:0 32px}
 /* Toast */
-.toast{position:absolute;left:50%;bottom:36px;transform:translateX(-50%) translateY(20px);background:rgba(27,31,39,.9);color:#fff;font-size:14px;padding:10px 22px;border-radius:999px;opacity:0;transition:.25s;pointer-events:none;z-index:9}
+.toast{position:absolute;left:50%;bottom:36px;transform:translateX(-50%) translateY(20px);background:rgba(27,31,39,.9);color:#fff;font-size:14px;padding:10px 22px;border-radius:999px;opacity:0;transition:.25s;pointer-events:none;z-index:30}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 /* 原型标注 */
 .note{position:absolute;right:-318px;top:120px;width:300px;background:#1E2229;border-radius:14px;padding:16px;color:#C8CDD6;font-size:12.5px;line-height:1.7}
@@ -124,11 +163,14 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
 <body>
 <div class="device">
   <div class="topbar">
-    <div class="back" onclick="go('v-settings')">‹</div>
+    <div class="back" onclick="goApp('settings')">‹</div>
     <h1 id="tb-title">语音灯光和动画</h1>
-    <span class="badge">原型 V1.1 · 仅演示</span>
+    <span class="badge">原型 V1.5 · 仅演示</span>
+    <div class="spacer"></div>
+    <button class="tabbtn on" id="tab-settings" onclick="goApp('settings')">本体 · 设置页</button>
+    <button class="tabbtn" id="tab-map" onclick="goApp('map')">建图 2.0 · 属性弹窗</button>
   </div>
-  <div class="body">
+  <div class="body" id="body-settings">
     <!-- 左侧菜单 -->
     <div class="side">
       <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>灯光设置</div>
@@ -141,7 +183,7 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
     </div>
 
     <div class="main">
-      <!-- ============ 视图1：设置页（截图原有内容 + 新增入口） ============ -->
+      <!-- ===== 设置页主视图 ===== -->
       <div class="view show" id="v-settings">
         <div class="card">
           <div class="row"><h3>音量</h3></div>
@@ -174,50 +216,92 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
           <div style="text-align:center;color:var(--c-text-3);font-size:13px;padding:16px 0 4px;border-top:1px solid #F2F3F6;margin-top:14px">暂无音乐，请先导入音乐</div>
         </div>
 
-        <!-- ★ 新增：声光警示区生效时段入口 -->
+        <!-- 设置页唯一入口：扫码上传自定义音频 -->
         <div class="group-label">声光警示区</div>
-        <div class="card entry" onclick="go('v-zones')">
-          <span class="tag-new">新增</span>
+        <div class="card entry" onclick="openQR()">
+          <span class="tag-new">V1.5 调整</span>
           <div class="row">
             <div style="flex:1">
-              <h3>声光警示区生效时段</h3>
-              <div class="desc">配置地图内声光警示区的播报生效时段，按周重复；时段外进入区域不播报。与建图工具内配置互通，此处修改即时下发。</div>
+              <h3>声光警示区自定义音频</h3>
+              <div class="desc">点击弹出扫码上传二维码（mp3 / wav / m4a，≤2MB）。</div>
             </div>
             <span class="chev">›</span>
           </div>
-          <div class="summary" id="entry-summary"></div>
+          <div class="hint" style="margin:10px 2px 0;cursor:pointer" onclick="event.stopPropagation();go('v-zones')">查看 / 管理各区已上传音频 ›</div>
         </div>
       </div>
 
-      <!-- ============ 视图2：警示区列表 ============ -->
+      <!-- ===== 二级页：已上传的自定义音频 ===== -->
       <div class="view" id="v-zones">
-        <div class="crumb" onclick="go('v-settings')">语音灯光和动画 <span>›</span> <b>声光警示区生效时段</b></div>
-        <div class="hint" style="margin:0 0 12px">共 <b id="zone-count">3</b> 个声光警示区 · 列表按地图 latest 同步 · 未设置时段的默认全天生效</div>
+        <div class="crumb" onclick="go('v-settings')">语音灯光和动画 <span>›</span> <b>已上传的自定义音频</b></div>
+        <div class="hint" style="margin:0 0 12px">共 <b id="zone-count">0</b> 条自定义音频 · <span style="color:var(--c-red)">被地图声光警示区元素使用中的音频不可删除</span>，需先在地图中切换为其他语音内容</div>
         <div id="zone-list"></div>
-      </div>
-
-      <!-- ============ 视图3：单区时段编辑 ============ -->
-      <div class="view" id="v-edit">
-        <div class="crumb" onclick="go('v-zones')">声光警示区 <span>›</span> <b id="edit-title">编辑时段</b></div>
-        <div id="audio-card"></div>
-        <div class="card all-day-card">
-          <div><h3>全天生效</h3><div class="desc">开启后全天全周生效，不校验下方时段</div></div>
-          <div class="toggle" id="tg-allday" onclick="toggleAllday()"></div>
-        </div>
-        <div id="seg-area"></div>
-        <button class="add-seg" id="btn-add" onclick="addSeg()">＋ 新增时段（每区最多 3 段）</button>
-        <div class="hint">· 时段按周重复生效，支持跨天（结束时间小于开始时间时自动按次日计算）<br>· 多段时段之间允许重叠，机器人按「任一时段命中即生效」判定<br>· 修改即时保存并下发机器人，无需手动点击保存</div>
       </div>
     </div>
   </div>
+
+  <!-- ===== 建图 2.0 地图编辑视图 ===== -->
+  <div class="body" id="body-map" style="display:none">
+    <div class="mapwrap" style="flex:1">
+      <div class="mapgrid"></div>
+      <div class="map-shape" style="left:60px;top:70px;width:150px;height:110px">禁止区域</div>
+      <div class="map-shape" style="left:250px;top:400px;width:180px;height:120px;border-color:#D97706;background:rgba(217,119,6,.08);color:#D97706">跌落预警区</div>
+      <div class="map-shape zone" data-z="0" style="left:220px;top:110px;width:170px;height:120px" onclick="pickZone(0)">声光警示区 1</div>
+      <div class="map-shape zone" data-z="1" style="left:520px;top:180px;width:200px;height:140px" onclick="pickZone(1)">声光警示区 2</div>
+      <div class="map-shape zone" data-z="2" style="left:400px;top:430px;width:190px;height:130px" onclick="pickZone(2)">声光警示区 3</div>
+      <div class="robot" style="left:470px;top:330px">🤖</div>
+      <div style="position:absolute;left:20px;bottom:16px;font-size:12px;color:var(--c-text-2)">建图 2.0 · 地图元素编辑（示意底图）· 点击地图上的警示区切换属性弹窗</div>
+
+      <!-- 属性弹窗（复刻截图 + 新增两组配置） -->
+      <div class="dlg" id="dlg">
+        <div class="dlg-head">
+          <h2>声光警示区属性</h2>
+          <span class="chk-demo ok" id="chk-demo">保存校验演示：正常</span>
+        </div>
+        <label>名称</label>
+        <input type="text" id="dlg-name">
+        <div class="flabel">警示模式</div>
+        <div class="mode-row">
+          <div class="mode-btn" id="mode-mute" onclick="setMode('mute')"><span class="mi">🔇</span>静音</div>
+          <div class="mode-btn" id="mode-warn" onclick="setMode('warn')"><span class="mi">⚠️</span>警示</div>
+        </div>
+        <div class="flabel">警示内容</div>
+        <div class="ct-row" id="ct-voice" onclick="tgCt('voice')"><span class="cb">✓</span>🔈 警示语音</div>
+        <div class="ct-row" id="ct-beep" onclick="tgCt('beep')"><span class="cb">✓</span>🔔 蜂鸣器</div>
+        <div class="ct-row" id="ct-lamp" onclick="tgCt('lamp')"><span class="cb">✓</span>💡 警示灯</div>
+        <div class="ct-hint">至少开启一项警示内容；机器人进入该区域后按所选方式警示。</div>
+
+        <!-- ★ V1.2 新增：音频选择（勾选警示语音时出现） -->
+        <div id="dlg-audio"></div>
+
+        <!-- ★ V1.2 新增：生效时间 -->
+        <div class="flabel">生效时间 <span style="font-weight:400;font-size:12px;color:var(--c-text-3)">（V1.2 新增）</span></div>
+        <div class="card" style="padding:12px 14px;margin-bottom:10px">
+          <div class="allday-row">
+            <div><h3 style="font-size:14px">全天生效</h3><div class="desc" style="margin-top:3px">开启后全天全周生效</div></div>
+            <div class="toggle" id="dlg-allday" onclick="dlgToggleAllday()"></div>
+          </div>
+        </div>
+        <div id="dlg-segs"></div>
+        <button class="add-seg2" id="dlg-add" onclick="dlgAddSeg()">＋ 新增时段（每区最多 3 段）</button>
+
+        <div class="dlg-foot">
+          <button class="btn-mini cancel" onclick="toast('已取消（演示）')">取消</button>
+          <button class="btn-mini confirm" onclick="dlgSave()">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast">已保存并下发</div>
   <div class="overlay" id="qr-overlay">
     <div class="qr-box">
       <h3>扫码上传示警音频</h3>
       <div class="qr-zone" id="qr-zone"></div>
+      <div class="qr-zones" id="qr-zones"></div>
       <canvas id="qr-canvas" width="182" height="182"></canvas>
       <div class="qr-url" id="qr-url"></div>
-      <div class="qr-hint">· 使用手机扫描二维码，在手机端上传示警音频<br>· 支持 mp3 / wav / m4a，≤ 2MB，时长 ≤ 15 秒<br>· 二维码 10 分钟内有效，过期后需重新生成<br>· 上传完成后音频自动关联到当前警示区，机器人下次同步任务配置时生效</div>
+      <div class="qr-hint">· 使用手机扫描二维码，在手机端上传示警音频<br>· 支持 mp3 / wav / m4a，≤ 2MB<br>· 二维码 10 分钟内有效，过期后需重新生成<br>· 上传后，在编辑地图元素灯光警示区时，播报语音可选择使用该文件</div>
       <div class="btns">
         <button class="btn-mini primary" onclick="simUpload()">模拟手机上传完成（演示）</button>
         <button class="btn-mini" onclick="closeQR()">关闭</button>
@@ -226,92 +310,86 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
   </div>
 
   <div class="note">
-    <h4>原型说明（对照 PRD V3）</h4>
-    <b>入口</b>：设置页 › 语音灯光和动画，新增「声光警示区生效时段」卡片。<br><br>
-    <b>能力</b>：按区配置生效时段（按周重复、最多 3 段、支持跨天），与建图 2.0 / PC 建图工具同一份配置，三端互通。<br><br>
-    <b>规则</b>：时段外进入区域不播报（含蜂鸣与灯效）；「全天生效」开关等价于未设置时段。<br><br>
-    <b>V1.1 新增</b>：每区支持「扫码上传自定义示警音频」——机器人端生成带区 ID 的临时二维码，手机扫码上传（mp3/wav/m4a，≤2MB，≤15s），完成后自动关联该区；未上传或选内置时回退默认音频。<br><br>
-    <b>PRD 影响</b>：属性表「生效时段」三端支持列由「新版 / PC」扩为「新版 / PC / 本体设置页」；「示警语音」新增「扫码上传自定义音频」来源，均需回写 PRD。
+    <h4>原型说明（V1.2）</h4>
+    <b>职责切分</b>：生效时段 + 音频选择 → 建图 2.0 元素属性弹窗（新增两组配置项）；设置页 → 只保留「扫码上传自定义音频」入口。<br><br>
+    <b>弹窗新增</b>：① 生效时间（全天生效开关 + 按周时段，最多 3 段，支持跨天）；② 音频选择（勾选警示语音后出现：内置音频库 / 已上传的自定义音频）。<br><br>
+    <b>V1.3 调整</b>：设置页「声光警示区自定义音频」卡片点击直接弹出二维码（弹窗内可切换目标警示区，换区换码）。<br><br>
+    <b>V1.5 调整</b>：被地图声光警示区元素使用中的自定义音频不可删除——列表中标「使用中」徽标与红色提示，点删除弹提醒「需先在地图中切换为其他语音内容后再删除」；未被使用的音频可直接删除。<br><br>
+    <b>PRD 影响</b>：三、1 建图 2.0 端补两组属性；设置页仅保留音频上传入口；示警语音格式规范（mp3/wav/m4a，≤2MB）待回写 PRD。
   </div>
 </div>
 
 <script>
 const WD=['一','二','三','四','五','六','日'];
-let zones=[
-  {id:1,name:'收银台警示区',allday:false,segs:[{days:[1,2,3,4,5],s:'08:00',e:'20:00'}],audio:{mode:'builtin',file:null}},
-  {id:2,name:'入口湿滑警示区',allday:true,segs:[],audio:{mode:'builtin',file:null}},
-  {id:3,name:'广告播报区（ET1）',allday:false,segs:[{days:[6,0],s:'10:00',e:'20:00'},{days:[1,2,3,4,5],s:'22:00',e:'06:00'}],audio:{mode:'custom',file:{name:'门店周年庆播报.mp3',size:'1.2MB',dur:'0:12',time:'11-16 14:30'}}},
+const PRESETS=[
+  {id:'p1',name:'请注意，机器人正在作业',dur:'0:04'},
+  {id:'p2',name:'前方施工，请绕行',dur:'0:05'},
+  {id:'p3',name:'消毒作业中，请勿靠近',dur:'0:06'},
 ];
-let cur=0;
+let zones=[
+  {id:1,name:'收银台警示区',dlgName:'声光警示区 1',allday:false,mode:'warn',ct:{voice:true,beep:false,lamp:true},audio:{mode:'builtin',preset:'p1',file:null},segs:[{days:[1,2,3,4,5],s:'08:00',e:'20:00'}]},
+  {id:2,name:'入口湿滑警示区',dlgName:'声光警示区 2',allday:true,mode:'warn',ct:{voice:false,beep:true,lamp:true},audio:{mode:'builtin',preset:'p2',file:null},segs:[]},
+  {id:3,name:'广告播报区（ET1）',dlgName:'声光警示区 3',allday:false,mode:'warn',ct:{voice:true,beep:false,lamp:true},audio:{mode:'custom',preset:null,file:{name:'门店周年庆播报.mp3',size:'1.2MB',dur:'0:12',time:'11-17 10:40'}},segs:[{days:[6,0],s:'10:00',e:'20:00'},{days:[1,2,3,4,5],s:'22:00',e:'06:00'}]},
+];
+let cur=0;            // 设置页当前操作的区
+let dz=1;             // 建图弹窗当前区（默认声光警示区 2，与截图一致）
 const $=s=>document.querySelector(s);
-function go(v){['v-settings','v-zones','v-edit'].forEach(x=>$('#'+x).classList.remove('show'));$('#'+v).classList.add('show');
-  $('#tb-title').textContent=v==='v-settings'?'语音灯光和动画':'声光警示区生效时段';
-  if(v==='v-zones')renderList();if(v==='v-edit')renderEdit();}
-function toast(msg){const t=$('#toast');t.textContent=msg||'已保存并下发';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1400)}
-function stOf(z){if(z.allday)return'<span class="st live">全天生效</span>';
-  const hit=z.segs.some(s=>s.days.length===0||true);
-  return z.segs.length?`<span class="st part">按时段 · ${z.segs.length} 段</span>`:'<span class="st off">未设置</span>'}
-function segText(z){if(z.allday)return'周一至周日 全天';
-  if(!z.segs.length)return'默认全天生效';
-  return z.segs.map(s=>{const d=s.days.length===7?'每天':s.days.map(i=>'周'+WD[i]).join('/');
-    const cross=s.e<=s.s;return `${d} ${s.s}–${s.e}${cross?'（次日）':''}`}).join('；')}
-function renderSummary(){
-  $('#entry-summary').innerHTML=zones.map(z=>{
-    const cls=z.allday?'ok':(z.segs.length?'':'warn');
-    let txt=z.allday?'全天生效':(z.segs.length?`${z.segs.length} 个时段`:'未设置时段');
-    if(z.audio&&z.audio.mode==='custom'&&z.audio.file)txt+=' · 🎵自定义';
-    return `<span class="pill ${cls}">${z.name} · ${txt}</span>`}).join('')}
+const $$=s=>document.querySelectorAll(s);
+function goApp(a){
+  $('#body-settings').style.display=a==='settings'?'flex':'none';
+  $('#body-map').style.display=a==='map'?'flex':'none';
+  $('#tab-settings').classList.toggle('on',a==='settings');
+  $('#tab-map').classList.toggle('on',a==='map');
+  $('#tb-title').textContent=a==='settings'?'语音灯光和动画':'建图 2.0 · 声光警示区属性';
+  if(a==='map')renderDlg();
+}
+function go(v){['v-settings','v-zones'].forEach(x=>$('#'+x).classList.remove('show'));$('#'+v).classList.add('show');
+  $('#tb-title').textContent='语音灯光和动画';}
+function toast(msg,ms){const t=$('#toast');t.textContent=msg||'已保存并下发';t.classList.add('show');clearTimeout(t._tm);t._tm=setTimeout(()=>t.classList.remove('show'),ms||1500)}
+function presetName(z){const p=PRESETS.find(p=>p.id===z.audio.preset);return p?p.name:'未选择'}
 function renderList(){
-  $('#zone-count').textContent=zones.length;
-  $('#zone-list').innerHTML=zones.map((z,i)=>`
-   <div class="card zone-card" onclick="openEdit(${i})">
-     <div class="zone-ico">🔊</div>
+  const up=zones.map((z,i)=>({z,i})).filter(o=>o.z.audio.mode==='custom'&&o.z.audio.file);
+  $('#zone-count').textContent=up.length;
+  let html='';
+  if(up.length){
+    html=up.map(o=>{
+   const used=o.z.audio.mode==='custom';
+   return `
+   <div class="card" style="display:flex;align-items:center;gap:14px;${used?'':''}">
+     <div class="zone-ico">🎵</div>
      <div class="zone-mid">
-       <div class="zone-name">${z.name} ${stOf(z)}${audioBadge(z)}</div>
-       <div class="zone-seg">${segText(z)}</div>
+       <div class="zone-name">${o.z.audio.file.name} ${used?'<span class="st live">使用中</span>':''}</div>
+       <div class="zone-seg">关联警示区：${o.z.dlgName}（${o.z.name}） · ${o.z.audio.file.size} · ${o.z.audio.file.dur} · 上传于 ${o.z.audio.file.time}${used?'<br><span style="color:var(--c-red)">该文件已被地图声光警示区元素选用为播报语音，不可删除</span>':''}</div>
      </div>
-     <span class="zone-chev">›</span>
-   </div>`).join('');
-  renderSummary()}
-function openEdit(i){cur=i;go('v-edit')}
-function audioBadge(z){
-  if(z.audio&&z.audio.mode==='custom'&&z.audio.file)return' <span class="st live">🎵 自定义音频</span>';
-  return''}
-function renderAudio(){
-  const z=zones[cur],a=z.audio||(z.audio={mode:'builtin',file:null});
-  const fileHtml=a.file?`
-    <div class="audio-file">
-      <div class="ico">🎵</div>
-      <div class="meta"><div class="fn">${a.file.name}</div><div class="fs">${a.file.size} · ${a.file.dur} · 上传于 ${a.file.time}</div></div>
-      <button class="btn-mini" onclick="toast()">▶ 试听</button>
-      <button class="btn-mini" onclick="openQR()">重新扫码</button>
-      <button class="btn-mini danger" onclick="delAudio()">删除</button>
-    </div>`:`
-    <div class="audio-file">
-      <div class="ico">⬆️</div>
-      <div class="meta"><div class="fn">尚未上传自定义音频</div><div class="fs">上传后该区示警时播报自定义音频；未上传时回退内置音频</div></div>
-      <button class="btn-mini primary" onclick="openQR()">扫码上传</button>
-    </div>`;
-  $('#audio-card').innerHTML=`
-   <div class="card">
-     <div class="row"><h3>示警音频</h3></div>
-     <div class="audio-mode">
-       <div class="audio-opt ${a.mode==='builtin'?'on':''}" onclick="setAudioMode('builtin')">
-         <div class="t">内置音频库</div><div class="d">使用系统内置默认警示语音</div>
-       </div>
-       <div class="audio-opt ${a.mode==='custom'?'on':''}" onclick="setAudioMode('custom')">
-         <div class="t">扫码上传自定义</div><div class="d">手机扫码上传门店自定义音频</div>
-       </div>
-     </div>
-     ${a.mode==='custom'?fileHtml:''}
-   </div>`}
-function setAudioMode(m){const a=zones[cur].audio||(zones[cur].audio={mode:'builtin',file:null});
-  if(a.mode===m)return;a.mode=m;renderAudio();toast()}
-function delAudio(){zones[cur].audio.file=null;renderAudio();toast()}
+     <button class="btn-mini" onclick="toast('试听仅演示')">▶ 试听</button>
+     <button class="btn-mini ${used?'':'danger'}" onclick="delZoneAudio(${o.i})">🗑 删除</button>
+   </div>`}).join('');
+  }else{
+    html='<div class="card" style="text-align:center;padding:36px 20px"><div style="font-size:34px">🎵</div><div style="font-size:15px;color:var(--c-text-1);margin-top:10px;font-weight:600">暂无自定义音频</div><div class="desc">返回设置页点击「声光警示区自定义音频」卡片扫码上传</div></div>';
+  }
+  const rest=zones.filter(z=>!(z.audio.mode==='custom'&&z.audio.file)).map(z=>z.dlgName);
+  if(rest.length)html+=`<div class="hint" style="margin-top:4px">${rest.join('、')}暂无自定义音频，可在设置页点击卡片扫码上传；未上传时该区示警回退内置音频。</div>`;
+  $('#zone-list').innerHTML=html}
+function delZoneAudio(i){
+  const z=zones[i];
+  if(z.audio.mode==='custom'){
+    toast('「'+z.audio.file.name+'」已被地图声光警示区元素使用，无法删除。请先在建图工具的元素属性中将其切换为其他语音内容，再删除',4200);
+    return}
+  z.audio={mode:'builtin',preset:z.audio.preset||'p1',file:null};
+  renderList();renderDlg();toast('已删除自定义音频，该区示警回退内置音频')}
+/* ===== 扫码 ===== */
 function openQR(){
-  $('#qr-zone').textContent='目标警示区：'+zones[cur].name;
+  renderQRZones();
+  $('#qr-zone').textContent='目标警示区：'+zones[cur].dlgName;
   $('#qr-url').textContent=location.origin+location.pathname.replace('index.html','')+'upload?zone='+zones[cur].id+'&t='+Date.now().toString(36);
   $('#qr-overlay').classList.add('show');drawQR(zones[cur].id+7)}
+function renderQRZones(){
+  $('#qr-zones').innerHTML=zones.map((z,i)=>
+    `<span class="pill ${i===cur?'on':''}" onclick="pickQRZone(${i})">${z.dlgName}</span>`).join('')}
+function pickQRZone(i){cur=i;renderQRZones();
+  $('#qr-zone').textContent='目标警示区：'+zones[cur].dlgName;
+  $('#qr-url').textContent=location.origin+location.pathname.replace('index.html','')+'upload?zone='+zones[cur].id+'&t='+Date.now().toString(36);
+  drawQR(zones[cur].id+7);toast('已切换到 '+zones[cur].dlgName)}
 function closeQR(){$('#qr-overlay').classList.remove('show')}
 function drawQR(seed){
   const c=$('#qr-canvas'),x=c.getContext('2d'),N=26,W=182,CS=Math.floor(W/N);
@@ -328,33 +406,76 @@ function drawQR(seed){
   finder(0,0);finder(N-7,0);finder(0,N-7)}
 function simUpload(){
   const d=new Date(),p=n=>String(n).padStart(2,'0');
-  zones[cur].audio={mode:'custom',file:{name:'警告提示音_门店自录.mp3',size:'860KB',dur:'0:09',time:`${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`}};
-  closeQR();renderAudio();toast('音频已上传并关联至 '+zones[cur].name)}
-function toggleAllday(){zones[cur].allday=!zones[cur].allday;renderEdit();toast()}
-function renderEdit(){
-  const z=zones[cur];
-  $('#edit-title').textContent=z.name+' · 生效时段与音频';
-  $('#tg-allday').classList.toggle('on',z.allday);
-  renderAudio();
-  $('#btn-add').disabled=z.allday||z.segs.length>=3;
-  $('#seg-area').innerHTML=z.allday?'':z.segs.map((s,si)=>`
-   <div class="seg-card">
-     <span class="del" onclick="delSeg(${si})">🗑 删除</span>
-     <div class="wd-row">${WD.map((w,di)=>`<div class="wd ${s.days.includes(di)?'on':''}" onclick="tgDay(${si},${di})">周${w}</div>`).join('')}</div>
+  zones[cur].audio={mode:'custom',preset:null,file:{name:'警告提示音_门店自录.mp3',size:'860KB',dur:'0:09',time:`${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`}};
+  closeQR();renderDlg();renderList();toast('音频已上传并关联至 '+zones[cur].dlgName)}
+/* ===== 建图 2.0 属性弹窗 ===== */
+function pickZone(i){dz=i;renderDlg();toast('已切换到 '+zones[dz].dlgName)}
+function renderDlg(){
+  const z=zones[dz];
+  $$('.map-shape.zone').forEach(el=>el.classList.toggle('cur',+el.dataset.z===dz));
+  $('#dlg-name').value=z.dlgName;
+  $('#mode-mute').classList.toggle('on',z.mode==='mute');
+  $('#mode-warn').classList.toggle('on',z.mode==='warn');
+  ['voice','beep','lamp'].forEach(k=>$('#ct-'+k).classList.toggle('on',!!z.ct[k]));
+  $('#dlg-allday').classList.toggle('on',z.allday);
+  renderDlgAudio();renderDlgSegs();chk()}
+function setMode(m){zones[dz].mode=m;renderDlg();toast()}
+function tgCt(k){zones[dz].ct[k]=!zones[dz].ct[k];renderDlg();toast()}
+function renderDlgAudio(){
+  const z=zones[dz],on=z.ct.voice&&z.mode==='warn';
+  let list='';
+  if(on){
+    list=`
+     <div class="flabel">音频选择 <span style="font-weight:400;font-size:12px;color:var(--c-text-3)">（V1.2 新增）</span></div>
+     <div class="audio-src-row ${z.audio.mode==='builtin'?'on':''}" onclick="setDlgAudio('builtin')"><span class="rd"></span>🎵 内置音频库</div>
+     ${z.audio.mode==='builtin'?PRESETS.map(p=>`
+       <div class="audio-src-row ${z.audio.preset===p.id?'on':''}" style="margin-left:18px" onclick="setDlgPreset('${p.id}')"><span class="rd"></span>🔈 ${p.name}<span class="dur">${p.dur}</span></div>`).join(''):''}
+     <div class="audio-src-row ${z.audio.mode==='custom'?'on':''}" onclick="setDlgAudio('custom')"><span class="rd"></span>📱 自定义音频（设置页扫码上传）</div>
+     ${z.audio.mode==='custom'?(z.audio.file?`
+       <div class="audio-src-row on" style="margin-left:18px"><span class="rd"></span>🎵 ${z.audio.file.name}<span class="dur">${z.audio.file.dur}</span></div>`
+       :`<div class="hint" style="margin:0 0 8px 18px;color:var(--c-red)">该区尚未上传自定义音频，请到<b>设置页 › 声光警示区自定义音频</b>扫码上传</div>`):''}
+     <div class="hint" style="margin-top:0">自定义音频文件在设置页扫码上传，此处仅选择使用。</div>`;
+  }else if(z.mode==='mute'){
+    list=`<div class="hint" style="margin-top:8px">静音模式下不执行声光播报，仅抑制常规语音与提示音，无音频配置。</div>`;
+  }
+  $('#dlg-audio').innerHTML=list}
+function setDlgAudio(m){if(zones[dz].audio.mode===m)return;zones[dz].audio.mode=m;
+  if(m==='builtin'&&!zones[dz].audio.preset)zones[dz].audio.preset='p1';
+  renderDlgAudio();chk();toast()}
+function setDlgPreset(p){zones[dz].audio.preset=p;renderDlgAudio();toast()}
+function renderDlgSegs(){
+  const z=zones[dz];
+  $('#dlg-add').disabled=z.allday||z.segs.length>=3;
+  $('#dlg-segs').innerHTML=z.allday?'':z.segs.map((s,si)=>`
+   <div class="sub-card">
+     <span class="del" onclick="dlgDelSeg(${si})">🗑 删除</span>
+     <div class="wd-row">${WD.map((w,di)=>`<div class="wd ${s.days.includes(di)?'on':''}" onclick="dlgTgDay(${si},${di})">周${w}</div>`).join('')}</div>
      <div class="time-row">
-       <input type="time" value="${s.s}" onchange="setT(${si},'s',this.value)">
-       <span class="arr">→</span>
-       <input type="time" value="${s.e}" onchange="setT(${si},'e',this.value)">
-       <span class="cross-tip ${s.e<=s.s?'show':''}">跨天：至次日 ${s.e}</span>
+       <input type="time" value="${s.s}" onchange="dlgSetT(${si},'s',this.value)">
+       <span style="color:var(--c-text-3)">→</span>
+       <input type="time" value="${s.e}" onchange="dlgSetT(${si},'e',this.value)">
+       <span class="cross-tip" style="${s.e<=s.s?'':'display:none'}">跨天：至次日 ${s.e}</span>
      </div>
    </div>`).join('')||'<div class="hint" style="color:var(--c-red)">未设置时段且未开启全天，该区域将不生效</div>'}
-function tgDay(si,di){const s=zones[cur].segs[si];const i=s.days.indexOf(di);
-  i>=0?s.days.splice(i,1):s.days.push(di);renderEdit();toast()}
-function setT(si,k,v){zones[cur].segs[si][k]=v;renderEdit();toast()}
-function delSeg(si){zones[cur].segs.splice(si,1);renderEdit();toast()}
-function addSeg(){const z=zones[cur];if(z.segs.length>=3)return;
-  z.segs.push({days:[1,2,3,4,5],s:'09:00',e:'18:00'});renderEdit();toast()}
-renderSummary();
+function dlgToggleAllday(){zones[dz].allday=!zones[dz].allday;renderDlgSegs();chk();toast()}
+function dlgTgDay(si,di){const s=zones[dz].segs[si];const i=s.days.indexOf(di);
+  i>=0?s.days.splice(i,1):s.days.push(di);renderDlgSegs();toast()}
+function dlgSetT(si,k,v){zones[dz].segs[si][k]=v;renderDlgSegs();toast()}
+function dlgDelSeg(si){zones[dz].segs.splice(si,1);renderDlgSegs();chk();toast()}
+function dlgAddSeg(){const z=zones[dz];if(z.allday||z.segs.length>=3)return;
+  z.segs.push({days:[1,2,3,4,5],s:'09:00',e:'18:00'});renderDlgSegs();chk();toast()}
+function chk(){
+  const z=zones[dz],b=$('#chk-demo');
+  let bad=null;
+  if(z.mode==='warn'&&!z.ct.voice&&!z.ct.beep&&!z.ct.lamp)bad='至少开启一项警示内容';
+  if(bad){b.textContent='保存校验演示：'+bad;b.className='chk-demo bad'}
+  else{b.textContent='保存校验演示：正常';b.className='chk-demo ok'}}
+function dlgSave(){
+  const z=zones[dz];
+  z.dlgName=$('#dlg-name').value.trim()||z.dlgName;
+  if(z.mode==='warn'&&!z.ct.voice&&!z.ct.beep&&!z.ct.lamp){toast('保存失败：至少开启一项警示内容');return}
+  renderList();toast(z.dlgName+' 属性已保存（时段'+(z.allday?'：全天':('：'+z.segs.length+' 段'))+'）')}
+renderList();
 </script>
 </body>
 </html>
