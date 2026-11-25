@@ -118,28 +118,12 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
 .chk-demo.bad{background:#FEF0EF;color:var(--c-red)}
 .dlg label,.flabel{display:block;font-size:14px;font-weight:600;color:var(--c-text-1);margin:14px 0 8px}
 .dlg input[type=text]{width:100%;height:44px;border:1px solid var(--c-line);border-radius:8px;background:#F5F6F8;padding:0 12px;font-size:15px;color:var(--c-text-1)}
-.mode-row{display:flex;gap:10px}
-.mode-btn{flex:1;height:62px;border:1.5px solid #EDEFF2;border-radius:10px;background:#F5F6F8;color:var(--c-text-2);font-size:15px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
-.mode-btn .mi{font-size:18px}
-.mode-btn.on{border-color:var(--c-primary);background:var(--c-primary-soft);color:var(--c-primary);font-weight:600}
 .ct-row{display:flex;align-items:center;gap:10px;border:1px solid #EDEFF2;border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;font-size:15px;color:var(--c-text-1)}
 .ct-row:hover{border-color:var(--c-primary)}
 .ct-row .cb{width:20px;height:20px;border:1.5px solid var(--c-line);border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px}
 .ct-row.on .cb{background:var(--c-primary);border-color:var(--c-primary)}
 .ct-row.on{border-color:var(--c-primary);background:#FAFBFF}
 .ct-hint{font-size:12px;color:var(--c-text-3);margin-top:2px}
-.sub-card{border:1px solid #EDEFF2;border-radius:10px;padding:12px;margin-bottom:10px}
-.sub-card .del{float:right;color:var(--c-text-3);cursor:pointer;font-size:12px}
-.sub-card .del:hover{color:var(--c-red)}
-.wd-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.wd{min-width:36px;height:32px;border-radius:7px;border:1px solid var(--c-line);background:#fff;color:var(--c-text-2);font-size:12px;cursor:pointer;text-align:center;line-height:30px;padding:0 4px;user-select:none}
-.wd.on{background:var(--c-primary);border-color:var(--c-primary);color:#fff}
-.time-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.time-row input[type=time]{height:36px;border:1px solid var(--c-line);border-radius:7px;padding:0 8px;font-size:13px;color:var(--c-text-1)}
-.cross-tip{font-size:11px;color:#D97706;background:#FFF7E6;border-radius:6px;padding:3px 8px}
-.add-seg2{width:100%;height:40px;border:1.5px dashed var(--c-line);border-radius:10px;background:none;color:var(--c-text-2);font-size:13px;cursor:pointer}
-.add-seg2:disabled{opacity:.45;cursor:not-allowed}
-.allday-row{display:flex;align-items:center;justify-content:space-between}
 .audio-src-row{display:flex;align-items:center;gap:10px;border:1px solid #EDEFF2;border-radius:8px;padding:11px 14px;margin-bottom:8px;cursor:pointer;font-size:14px;color:var(--c-text-1)}
 .audio-src-row .rd{width:18px;height:18px;border:1.5px solid var(--c-line);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .audio-src-row.on{border-color:var(--c-primary);background:#FAFBFF}
@@ -165,7 +149,7 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
   <div class="topbar">
     <div class="back" onclick="goApp('settings')">‹</div>
     <h1 id="tb-title">语音灯光和动画</h1>
-    <span class="badge">原型 V1.5 · 仅演示</span>
+    <span class="badge">原型 V1.7 · 仅演示</span>
     <div class="spacer"></div>
     <button class="tabbtn on" id="tab-settings" onclick="goApp('settings')">本体 · 设置页</button>
     <button class="tabbtn" id="tab-map" onclick="goApp('map')">建图 2.0 · 属性弹窗</button>
@@ -219,7 +203,7 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
         <!-- 设置页唯一入口：扫码上传自定义音频 -->
         <div class="group-label">声光警示区</div>
         <div class="card entry" onclick="openQR()">
-          <span class="tag-new">V1.5 调整</span>
+          <span class="tag-new">V1.7 调整</span>
           <div class="row">
             <div style="flex:1">
               <h3>声光警示区自定义音频</h3>
@@ -260,11 +244,6 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
         </div>
         <label>名称</label>
         <input type="text" id="dlg-name">
-        <div class="flabel">警示模式</div>
-        <div class="mode-row">
-          <div class="mode-btn" id="mode-mute" onclick="setMode('mute')"><span class="mi">🔇</span>静音</div>
-          <div class="mode-btn" id="mode-warn" onclick="setMode('warn')"><span class="mi">⚠️</span>警示</div>
-        </div>
         <div class="flabel">警示内容</div>
         <div class="ct-row" id="ct-voice" onclick="tgCt('voice')"><span class="cb">✓</span>🔈 警示语音</div>
         <div class="ct-row" id="ct-beep" onclick="tgCt('beep')"><span class="cb">✓</span>🔔 蜂鸣器</div>
@@ -274,16 +253,9 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
         <!-- ★ V1.2 新增：音频选择（勾选警示语音时出现） -->
         <div id="dlg-audio"></div>
 
-        <!-- ★ V1.2 新增：生效时间 -->
-        <div class="flabel">生效时间 <span style="font-weight:400;font-size:12px;color:var(--c-text-3)">（V1.2 新增）</span></div>
-        <div class="card" style="padding:12px 14px;margin-bottom:10px">
-          <div class="allday-row">
-            <div><h3 style="font-size:14px">全天生效</h3><div class="desc" style="margin-top:3px">开启后全天全周生效</div></div>
-            <div class="toggle" id="dlg-allday" onclick="dlgToggleAllday()"></div>
-          </div>
-        </div>
-        <div id="dlg-segs"></div>
-        <button class="add-seg2" id="dlg-add" onclick="dlgAddSeg()">＋ 新增时段（每区最多 3 段）</button>
+        <!-- ★ 生效时间：V1.7 起固定为全天生效，不支持配置时间段 -->
+        <div class="flabel">生效时间 <span style="font-weight:400;font-size:12px;color:var(--c-text-3)">（默认全天生效，不支持配置时间段）</span></div>
+        <div class="audio-src-row on" style="cursor:default"><span class="rd"></span>🕐 全天生效（全天全周，进入区域即触发）</div>
 
         <div class="dlg-foot">
           <button class="btn-mini cancel" onclick="toast('已取消（演示）')">取消</button>
@@ -315,21 +287,22 @@ body{background:#15181D;display:flex;align-items:center;justify-content:center;m
     <b>弹窗新增</b>：① 生效时间（全天生效开关 + 按周时段，最多 3 段，支持跨天）；② 音频选择（勾选警示语音后出现：内置音频库 / 已上传的自定义音频）。<br><br>
     <b>V1.3 调整</b>：设置页「声光警示区自定义音频」卡片点击直接弹出二维码（弹窗内可切换目标警示区，换区换码）。<br><br>
     <b>V1.5 调整</b>：被地图声光警示区元素使用中的自定义音频不可删除——列表中标「使用中」徽标与红色提示，点删除弹提醒「需先在地图中切换为其他语音内容后再删除」；未被使用的音频可直接删除。<br><br>
+    <b>V1.6 调整</b>：建图 2.0 属性弹窗移除「警示模式（静音 / 警示）」选择项，弹窗仅保留名称、警示内容、生效时间与音频选择。<br><br>
+    <b>V1.7 调整</b>：生效时间固定为「全天生效」，不支持配置时间段（原全天开关与按周时段编辑移除）。<br><br>
     <b>PRD 影响</b>：三、1 建图 2.0 端补两组属性；设置页仅保留音频上传入口；示警语音格式规范（mp3/wav/m4a，≤2MB）待回写 PRD。
   </div>
 </div>
 
 <script>
-const WD=['一','二','三','四','五','六','日'];
 const PRESETS=[
   {id:'p1',name:'请注意，机器人正在作业',dur:'0:04'},
   {id:'p2',name:'前方施工，请绕行',dur:'0:05'},
   {id:'p3',name:'消毒作业中，请勿靠近',dur:'0:06'},
 ];
 let zones=[
-  {id:1,name:'收银台警示区',dlgName:'声光警示区 1',allday:false,mode:'warn',ct:{voice:true,beep:false,lamp:true},audio:{mode:'builtin',preset:'p1',file:null},segs:[{days:[1,2,3,4,5],s:'08:00',e:'20:00'}]},
-  {id:2,name:'入口湿滑警示区',dlgName:'声光警示区 2',allday:true,mode:'warn',ct:{voice:false,beep:true,lamp:true},audio:{mode:'builtin',preset:'p2',file:null},segs:[]},
-  {id:3,name:'广告播报区（ET1）',dlgName:'声光警示区 3',allday:false,mode:'warn',ct:{voice:true,beep:false,lamp:true},audio:{mode:'custom',preset:null,file:{name:'门店周年庆播报.mp3',size:'1.2MB',dur:'0:12',time:'11-17 10:40'}},segs:[{days:[6,0],s:'10:00',e:'20:00'},{days:[1,2,3,4,5],s:'22:00',e:'06:00'}]},
+  {id:1,name:'收银台警示区',dlgName:'声光警示区 1',ct:{voice:true,beep:false,lamp:true},audio:{mode:'builtin',preset:'p1',file:null}},
+  {id:2,name:'入口湿滑警示区',dlgName:'声光警示区 2',ct:{voice:false,beep:true,lamp:true},audio:{mode:'builtin',preset:'p2',file:null}},
+  {id:3,name:'广告播报区（ET1）',dlgName:'声光警示区 3',ct:{voice:true,beep:false,lamp:true},audio:{mode:'custom',preset:null,file:{name:'门店周年庆播报.mp3',size:'1.2MB',dur:'0:12',time:'11-17 10:40'}}},
 ];
 let cur=0;            // 设置页当前操作的区
 let dz=1;             // 建图弹窗当前区（默认声光警示区 2，与截图一致）
@@ -414,15 +387,11 @@ function renderDlg(){
   const z=zones[dz];
   $$('.map-shape.zone').forEach(el=>el.classList.toggle('cur',+el.dataset.z===dz));
   $('#dlg-name').value=z.dlgName;
-  $('#mode-mute').classList.toggle('on',z.mode==='mute');
-  $('#mode-warn').classList.toggle('on',z.mode==='warn');
   ['voice','beep','lamp'].forEach(k=>$('#ct-'+k).classList.toggle('on',!!z.ct[k]));
-  $('#dlg-allday').classList.toggle('on',z.allday);
-  renderDlgAudio();renderDlgSegs();chk()}
-function setMode(m){zones[dz].mode=m;renderDlg();toast()}
+  renderDlgAudio();chk()}
 function tgCt(k){zones[dz].ct[k]=!zones[dz].ct[k];renderDlg();toast()}
 function renderDlgAudio(){
-  const z=zones[dz],on=z.ct.voice&&z.mode==='warn';
+  const z=zones[dz],on=z.ct.voice;
   let list='';
   if(on){
     list=`
@@ -435,46 +404,23 @@ function renderDlgAudio(){
        <div class="audio-src-row on" style="margin-left:18px"><span class="rd"></span>🎵 ${z.audio.file.name}<span class="dur">${z.audio.file.dur}</span></div>`
        :`<div class="hint" style="margin:0 0 8px 18px;color:var(--c-red)">该区尚未上传自定义音频，请到<b>设置页 › 声光警示区自定义音频</b>扫码上传</div>`):''}
      <div class="hint" style="margin-top:0">自定义音频文件在设置页扫码上传，此处仅选择使用。</div>`;
-  }else if(z.mode==='mute'){
-    list=`<div class="hint" style="margin-top:8px">静音模式下不执行声光播报，仅抑制常规语音与提示音，无音频配置。</div>`;
   }
   $('#dlg-audio').innerHTML=list}
 function setDlgAudio(m){if(zones[dz].audio.mode===m)return;zones[dz].audio.mode=m;
   if(m==='builtin'&&!zones[dz].audio.preset)zones[dz].audio.preset='p1';
   renderDlgAudio();chk();toast()}
 function setDlgPreset(p){zones[dz].audio.preset=p;renderDlgAudio();toast()}
-function renderDlgSegs(){
-  const z=zones[dz];
-  $('#dlg-add').disabled=z.allday||z.segs.length>=3;
-  $('#dlg-segs').innerHTML=z.allday?'':z.segs.map((s,si)=>`
-   <div class="sub-card">
-     <span class="del" onclick="dlgDelSeg(${si})">🗑 删除</span>
-     <div class="wd-row">${WD.map((w,di)=>`<div class="wd ${s.days.includes(di)?'on':''}" onclick="dlgTgDay(${si},${di})">周${w}</div>`).join('')}</div>
-     <div class="time-row">
-       <input type="time" value="${s.s}" onchange="dlgSetT(${si},'s',this.value)">
-       <span style="color:var(--c-text-3)">→</span>
-       <input type="time" value="${s.e}" onchange="dlgSetT(${si},'e',this.value)">
-       <span class="cross-tip" style="${s.e<=s.s?'':'display:none'}">跨天：至次日 ${s.e}</span>
-     </div>
-   </div>`).join('')||'<div class="hint" style="color:var(--c-red)">未设置时段且未开启全天，该区域将不生效</div>'}
-function dlgToggleAllday(){zones[dz].allday=!zones[dz].allday;renderDlgSegs();chk();toast()}
-function dlgTgDay(si,di){const s=zones[dz].segs[si];const i=s.days.indexOf(di);
-  i>=0?s.days.splice(i,1):s.days.push(di);renderDlgSegs();toast()}
-function dlgSetT(si,k,v){zones[dz].segs[si][k]=v;renderDlgSegs();toast()}
-function dlgDelSeg(si){zones[dz].segs.splice(si,1);renderDlgSegs();chk();toast()}
-function dlgAddSeg(){const z=zones[dz];if(z.allday||z.segs.length>=3)return;
-  z.segs.push({days:[1,2,3,4,5],s:'09:00',e:'18:00'});renderDlgSegs();chk();toast()}
 function chk(){
   const z=zones[dz],b=$('#chk-demo');
   let bad=null;
-  if(z.mode==='warn'&&!z.ct.voice&&!z.ct.beep&&!z.ct.lamp)bad='至少开启一项警示内容';
+  if(!z.ct.voice&&!z.ct.beep&&!z.ct.lamp)bad='至少开启一项警示内容';
   if(bad){b.textContent='保存校验演示：'+bad;b.className='chk-demo bad'}
   else{b.textContent='保存校验演示：正常';b.className='chk-demo ok'}}
 function dlgSave(){
   const z=zones[dz];
   z.dlgName=$('#dlg-name').value.trim()||z.dlgName;
-  if(z.mode==='warn'&&!z.ct.voice&&!z.ct.beep&&!z.ct.lamp){toast('保存失败：至少开启一项警示内容');return}
-  renderList();toast(z.dlgName+' 属性已保存（时段'+(z.allday?'：全天':('：'+z.segs.length+' 段'))+'）')}
+  if(!z.ct.voice&&!z.ct.beep&&!z.ct.lamp){toast('保存失败：至少开启一项警示内容');return}
+  renderList();toast(z.dlgName+' 属性已保存（全天生效）')}
 renderList();
 </script>
 </body>
